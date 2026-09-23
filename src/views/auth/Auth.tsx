@@ -78,6 +78,11 @@ export const AuthView = () => {
     handleClean();
   }, []);
 
+  const handleGoBack = useCallback(() => {
+    handleClean();
+    changeStep("authMethodChooser");
+  }, [handleClean, changeStep]);
+
   return (
     <Container>
       {step != "home" && (
@@ -86,6 +91,7 @@ export const AuthView = () => {
           identityCard={identityCard}
           seconds={seconds}
           resetStep={resetStep}
+          goBack={(step === "faceRecognition" || step === "biometricRecognition") ? handleGoBack : undefined}
         />
       )}
       <ContainerSteps>

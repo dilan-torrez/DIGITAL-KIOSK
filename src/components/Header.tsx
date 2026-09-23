@@ -9,12 +9,13 @@ interface Props {
   identityCard: string;
   seconds: number;
   resetStep?: () => void;
+  goBack?: () => void;
 }
 
 const fontSize = innerWidth > innerHeight ? "2vw" : "3.5vw";
 
 const Header = memo((props: Props) => {
-  const { name, identityCard, seconds, resetStep } = props;
+  const { name, identityCard, seconds, resetStep, goBack } = props;
   return (
     <AppBar position="static" style={{ background: "#008698", flex: "0 0 7%" }}>
       <Toolbar>
@@ -34,7 +35,15 @@ const Header = memo((props: Props) => {
               </Typography>
             )}
           </Grid>
-          <Grid item>
+          <Grid item sx={{ display: "flex", alignItems: "center" }}>
+            {goBack && (
+              <ComponentButton
+                onClick={goBack}
+                text="atras"
+                sx={{ fontSize, marginRight: "1rem" }}
+                color="info"
+              />
+            )}
             {resetStep ? (
               <ComponentButton
                 onClick={() => resetStep()}
