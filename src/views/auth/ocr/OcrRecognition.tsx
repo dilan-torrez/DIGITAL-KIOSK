@@ -360,7 +360,10 @@ export const OcrView = memo(
           await getLocalUserVideo();
           changeLoadingGlobal(false);
         })
-        .catch(() => console.error("No se cargaron los modelos"));
+        .catch(() => {
+          console.error("No se cargaron los modelos");
+          changeLoadingGlobal(false);
+        });
     }, []);
 
     return (

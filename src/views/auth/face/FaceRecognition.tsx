@@ -509,10 +509,11 @@ export const FaceRecognition = memo(
     const cleanup = useCallback(() => {
       intervalVideo && clearInterval(intervalVideo);
 
-      if (videoRef.current)
-        videoRef.current.srcObject
+      if (videoRef.current && videoRef.current.srcObject) {
+        (videoRef.current.srcObject as MediaStream)
           .getTracks()
           .forEach((track: MediaStreamTrack) => track.stop());
+      }
     }, [videoRef]);
 
     const totalData = async () => {
@@ -533,7 +534,10 @@ export const FaceRecognition = memo(
             changeLoadingGlobal(false);
           }, 2000); // 2 segundos de espera para el enfoque automático
         })
-        .catch(() => console.error("No se cargaron los modelos"));
+        .catch(() => {
+          console.error("No se cargaron los modelos");
+          changeLoadingGlobal(false);
+        });
     }, []);
 
     return (
